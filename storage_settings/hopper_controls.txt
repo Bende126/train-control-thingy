@@ -1,0 +1,17 @@
+hopper_in redstoneIntegrator_19 track_0 left output
+hopper_out redstoneIntegrator_19 track_0 front output
+
+hopper_in redstoneIntegrator_19 track_1 right output
+hopper_out redstoneIntegrator_19 track_1 back output
+
+hopper_in redstoneIntegrator_20 track_2 left output
+hopper_out redstoneIntegrator_20 track_2 front output
+
+hopper_in redstoneIntegrator_20 track_3 right output
+hopper_out redstoneIntegrator_20 track_3 back output
+
+hopper_in redstoneIntegrator_21 track_4 left output
+hopper_out redstoneIntegrator_21 track_4 front output
+
+hopper_in redstoneIntegrator_21 track_5 right output
+hopper_out redstoneIntegrator_21 track_5 back output

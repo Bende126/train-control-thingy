@@ -1,0 +1,17 @@
+hopper_storage_in sophisticatedstorage:controller_1 track_0 none none
+hopper_storage_out sophisticatedstorage:controller_7 track_0 none none
+
+hopper_storage_in sophisticatedstorage:controller_2 track_1 none none
+hopper_storage_out sophisticatedstorage:controller_8 track_1 none none
+
+hopper_storage_in sophisticatedstorage:controller_3 track_2 none none
+hopper_storage_out sophisticatedstorage:controller_9 track_2 none none
+
+hopper_storage_in sophisticatedstorage:controller_4 track_3 none none
+hopper_storage_out sophisticatedstorage:controller_10 track_3 none none
+
+hopper_storage_in sophisticatedstorage:controller_5 track_4 none none
+hopper_storage_out sophisticatedstorage:controller_11 track_4 none none
+
+hopper_storage_in sophisticatedstorage:controller_6 track_5 none none
+hopper_storage_out sophisticatedstorage:controller_12 track_5 none none
