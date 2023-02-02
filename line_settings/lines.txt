@@ -1,8 +1,8 @@
 Warehouse > Industrial Zone
-Warehouse > Plant farm
+Warehouse > Plant Farm
 
 Industrial Zone > Warehouse
-Industrial Zone > Plant farm
+Industrial Zone > Plant Farm
 
-Plant farm > Tree farm
-Plant farm > Industrial Zone
+Plant Farm > Tree Farm
+Plant Farm > Industrial Zone

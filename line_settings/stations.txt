@@ -1,4 +1,4 @@
 Warehouse
-Plant farm
-Tree farm
+Plant Farm
+Tree Farm
 Industrial Zone
