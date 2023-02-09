@@ -1,5 +1,11 @@
-local modem = peripheral.find("modem") or error("No modem attached", 0)
-modem.open(43) -- receives messages from other computers on this channel
+local modem = peripheral.find("modem")
+if not modem then error("No modem attached", 0) end
+
+local settings = require("options")
+
+local main_ch = tonumber(settings.main_channel())
+
+modem.open(main_ch) -- receives messages from other computers on this channel
 
 local tracks = {}
 
@@ -9,8 +15,12 @@ local function wait_for_response()
   local event, side, channel, replyChannel, message, distance
   repeat
     event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
-  until channel == 43
-  print(message)
+  until channel == main_ch
+  -- print(message)
+  if message.message == "startup" then
+    local tmp = {occupied = 0, replych = replyChannel}
+    tracks[message.name] = tmp
+  end
 end
 
 local function five_sec_timer()
@@ -33,4 +43,20 @@ for i, comp in pairs(computers) do
   print("done")
 end
 
+for key, value in pairs(tracks) do
+  print(key .. " " .. value.replych .. " " .. value.occupied)
+end
 
+
+local function navigation()
+  while true do
+
+    local event, side, channel, replyChannel, message, distance
+    repeat
+      event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
+    until channel == settings.main_channel()
+
+
+
+  end
+end

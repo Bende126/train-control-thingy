@@ -1,3 +1,3 @@
-settings/hopper_controls.txt
-settings/hopper_storage_controls.txt
-settings/train_detector.txt
+storage_settings/hopper_controls.txt
+storage_settings/hopper_storage_controls.txt
+storage_settings/train_detector.txt

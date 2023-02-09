@@ -1,0 +1,40 @@
+train_detect redstoneIntegrator_23 track_3 top input
+train_in_color redstoneIntegrator_23 track_3 left output
+train_in_organizer redstoneIntegrator_23 track_3 back output
+
+train_detect redstoneIntegrator_24 track_2 top input
+train_in_color redstoneIntegrator_24 track_2 right output
+train_in_organizer redstoneIntegrator_24 track_2 back output
+
+train_color_stop redstoneIntegrator_25 track_2 front output
+train_color_stop redstoneIntegrator_26 track_3 front output
+
+train_stop redstoneIntegrator_23 track_2 right output
+train_stop redstoneIntegrator_24 track_3 left output
+
+train_switch:3-4 redstoneIntegrator_27 track_3 front output
+train_switch:2-1 redstoneIntegrator_28 track_2 front output
+train_switch:1-0 redstoneIntegrator_29 track_1 front output
+train_switch:4-5 redstoneIntegrator_30 track_4 front output
+
+train_switch:5-4 redstoneIntegrator_31 track_4 front output
+train_switch:0-1 redstoneIntegrator_32 track_1 front output
+train_switch:4-3 redstoneIntegrator_33 track_3 front output
+train_switch:1-2 redstoneIntegrator_34 track_2 front output
+
+track_stop redstoneIntegrator_35 track_5 front output
+track_stop redstoneIntegrator_36 track_4 front output
+track_stop redstoneIntegrator_17 track_3 front output
+track_stop redstoneIntegrator_37 track_2 front output
+track_stop redstoneIntegrator_38 track_1 front output
+track_stop redstoneIntegrator_39 track_0 front output
+
+track_detect redstoneIntegrator_40 track_5 front input
+track_detect redstoneIntegrator_41 track_4 front input
+track_detect redstoneIntegrator_42 track_3 front input
+track_detect redstoneIntegrator_43 track_2 front input
+track_detect redstoneIntegrator_44 track_1 front input
+track_detect redstoneIntegrator_45 track_0 front input
+
+color_storage minecraft:barrel_0 track_2 none none
+color_storage minecraft:barrel_1 track_3 none none

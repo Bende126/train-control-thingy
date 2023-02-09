@@ -1,7 +1,17 @@
-local modem = peripheral.find("modem") or error("No modem attached", 0)
-modem.open(15)
+local settings = require("options")
 
-modem.transmit(43, 15, os.getComputerLabel())
+local modem = peripheral.find("modem")
+if not modem then error("No modem attached", 0) end
+
+local main_ch = tonumber(settings.main_channel())
+local reply_ch = tonumber(string.sub(os.getComputerLabel(), -1)) + 10
+
+print(main_ch .. " > " .. reply_ch)
+
+modem.open(reply_ch)
+
+local message_table = {name = os.getComputerLabel(), message = "startup"}
+modem.transmit(main_ch, reply_ch, message_table)
 
 local peripheral_list = require("peripherals")
 

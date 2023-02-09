@@ -18,15 +18,16 @@ local function find_peripheral(name, track, interfaces)
       return o
     end
   
-    local me_system = peripheral.find("meBridge")
-    if not me_system then error("ME bridge error") end
-  
   -- creates an array based on preset keywords
     local function mysplit (inputstr)
         local sep = "%s"
         local tmp={}
+        local preset = {"name", "id", "track", "side", "io", "func"}
+        local i = 1
         for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
-          tmp[#tmp+1] = str
+          local key = string.format(preset[i])
+          tmp[key] = str
+          i = i+1
         end
         return InterFace:new(tmp)
     end
@@ -69,7 +70,7 @@ local function find_peripheral(name, track, interfaces)
       end
     end
   
-    local file = 'settings/files.txt'
+    local file = 'storage_settings/files.txt'
     local files = lines_from(file, false)
   
     create_merged(files)
