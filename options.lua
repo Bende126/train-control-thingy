@@ -1,11 +1,9 @@
 local function main_channel()
-    local tmp = {}
-    for line in io.lines("settings/main_channel.txt") do
-        tmp[#tmp+1] = line
-    end
-    return tmp[1]
+    local f = io.open("settings/main_channel.txt", "r")
+    if f == nil then return 0 end
+    local ch = f:read()
+    f:close()
+    return ch
 end
-
-print(main_channel())
 
 return {main_channel = main_channel}
