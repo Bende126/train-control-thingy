@@ -1,13 +1,25 @@
+local settings = require("options")
+
 local function find_peripheral(name, track, interfaces)
   if track == nil then
     for i, line in ipairs(interfaces) do
-      if line.name == name then return line
+      if line.name == name then
+        return line
       end
     end
   else
     for i, line in ipairs(interfaces) do
-      if line.name == name and line.track == track then return line
+      if line.name == name and line.track == track then
+        return line
       end
+    end
+  end
+end
+
+local function partial_find(name, interfaces)
+  for i, line in ipairs(interfaces) do
+    if settings.starts_with(line.name, name) then
+      return line
     end
   end
 end
@@ -95,4 +107,4 @@ end
   
   end
   
-  return {get_peripherals = get_peripherals, find_peripheral = find_peripheral}
+  return {get_peripherals = get_peripherals, find_peripheral = find_peripheral, partial_find = partial_find}
