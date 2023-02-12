@@ -14,7 +14,7 @@ local track = os.getComputerLabel()
 
 modem.open(reply_ch)
 
-local startup_message = {name = os.getComputerLabel(), message = "startup", track = track}
+local startup_message = {name = os.getComputerLabel(), message = "startup", track = tonumber(string.sub(os.getComputerLabel(), -1))}
 modem.transmit(main_ch, reply_ch, startup_message)
 
 local peripheralss = peripheral_list.get_peripherals()
