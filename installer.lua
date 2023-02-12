@@ -6,7 +6,7 @@ local files = {
     "options.lua"
 }
 
-local header = "https://github.com/Bende126/train-control-thingy/blob/master/"
+local header = "https://raw.githubusercontent.com/Bende126/train-control-thingy/master/"
 
 for _,i in ipairs(files) do
     local path = header .. i
