@@ -1,9 +1,16 @@
 local function find_peripheral(name, track, interfaces)
+  if track == nil then
+    for i, line in ipairs(interfaces) do
+      if line.name == name then return line
+      end
+    end
+  else
     for i, line in ipairs(interfaces) do
       if line.name == name and line.track == track then return line
       end
     end
   end
+end
   
   local function get_peripherals()
   
