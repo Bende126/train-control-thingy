@@ -1,6 +1,5 @@
 local files = {
-    "https://github.com/Bende126/train-control-thingy/tree/master/settings",
-    "https://github.com/Bende126/train-control-thingy/tree/master/storage_settings"
+    "https://github.com/Bende126/train-control-thingy"
 }
 
 for _,i in ipairs(files) do
