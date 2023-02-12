@@ -1,8 +1,7 @@
 local files = {
     "options.lua",
-    "station.lua",
     "startup.lua",
-    "server.lua",
+    "peripherals.lua",
     "settings/main_channel.txt",
     "storage_settings/files.txt",
     "storage_settings/hopper_controls.txt",
