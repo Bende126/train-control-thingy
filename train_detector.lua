@@ -10,9 +10,8 @@ local track = string.sub(os.getComputerLabel(), 7)
 
 modem.open(reply_ch)
 
-local message_table = {name = os.getComputerLabel(), message = "startup"}
-modem.transmit(main_ch, reply_ch, message_table)
-
+--[[ local message_table = {name = os.getComputerLabel(), message = "startup"}
+modem.transmit(main_ch, reply_ch, message_table) ]]
 
 local peripheralss = peripheral_list.get_peripherals()
 

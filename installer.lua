@@ -13,6 +13,26 @@ local header = "https://raw.githubusercontent.com/Bende126/train-control-thingy/
 
 for _,i in ipairs(files) do
     local path = header .. i
-    shell.run("wget", path, i)
+    if not shell.run("wget", path, i) then
+        error("Donwload error at: ".. i, 0)
+    end
+end
+
+local settings = require("options")
+
+if settings.starts_with(os.getComputerLabel(), "color_") then
+    if not shell.run("rm", files[2]) then
+        error("Rm error", 0)
+    end
+
+    local path = header .. "train_detector.lua"
+
+    if not shell.run("wget", path, "train_detector.lua") then
+        error("Download error", 0)
+    end
+
+    if not shell.run("rename", "train_detector.lua", "startup.lua") then
+        error("Download error", 0)
+    end
 end
 
