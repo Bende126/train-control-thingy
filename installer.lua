@@ -1,9 +1,13 @@
 local files = {
+    "options.lua",
     "station.lua",
     "startup.lua",
     "server.lua",
     "settings/main_channel.txt",
-    "options.lua"
+    "storage_settings/files.txt",
+    "storage_settings/hopper_controls.txt",
+    "storage_settings/hopper_storage_controls.txt",
+    "storage_settings/train_detector.txt"
 }
 
 local header = "https://raw.githubusercontent.com/Bende126/train-control-thingy/master/"
