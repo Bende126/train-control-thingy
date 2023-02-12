@@ -18,6 +18,10 @@ local function pairsByKeys (t, f)
       end
     end
     return iter
-  end
+end
 
-return {main_channel = main_channel, pairsByKeys = pairsByKeys}
+local function starts_with(text, prefix)
+    return text:find(prefix, 1, true) == 1
+end
+
+return {main_channel = main_channel, pairsByKeys = pairsByKeys, starts_with = starts_with}
