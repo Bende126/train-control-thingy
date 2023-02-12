@@ -1,3 +1,7 @@
+local function starts_with(text, prefix)
+    return text:find(prefix, 1, true) == 1
+end
+
 local files = {
     "options.lua",
     "startup.lua",
@@ -18,12 +22,7 @@ for _,i in ipairs(files) do
     end
 end
 
-print(shell.dir())
-shell.setDir("/")
-
-local settings = require("options")
-
-if settings.starts_with(os.getComputerLabel(), "color_") then
+if starts_with(os.getComputerLabel(), "color_") then
     if not shell.run("rm", files[2]) then
         error("Rm error", 0)
     end
