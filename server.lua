@@ -44,7 +44,7 @@ for i, comp in pairs(computers) do
   print("done")
 end
 
-for key, value in pairs(tracks) do
+for key, value in settings.pairsByKeys(tracks) do
   print(key  .. " " .. value.track)
 end
 
