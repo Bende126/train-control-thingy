@@ -18,6 +18,8 @@ for _,i in ipairs(files) do
     end
 end
 
+shell.setDir("/")
+
 local settings = require("options")
 
 if settings.starts_with(os.getComputerLabel(), "color_") then
