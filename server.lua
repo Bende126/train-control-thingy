@@ -1,7 +1,7 @@
+local settings = require("options")
+
 local modem = peripheral.find("modem")
 if not modem then error("No modem attached", 0) end
-
-local settings = require("options")
 
 local main_ch = tonumber(settings.main_channel())
 
@@ -16,9 +16,8 @@ local function wait_for_response()
   repeat
     event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
   until channel == main_ch
-  -- print(message)
   if message.message == "startup" then
-    local tmp = {occupied = 0, replych = replyChannel}
+    local tmp = {occupied = 0, replych = replyChannel, loaded = 0, unloaded = 0, track = message.track}
     tracks[message.name] = tmp
   end
 end
@@ -43,20 +42,24 @@ for i, comp in pairs(computers) do
   print("done")
 end
 
-for key, value in pairs(tracks) do
-  print(key .. " " .. value.replych .. " " .. value.occupied)
-end
-
-
-local function navigation()
+local function loop()
   while true do
 
     local event, side, channel, replyChannel, message, distance
     repeat
       event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
-    until channel == settings.main_channel()
+    until channel == main_ch
 
-
+    -- what to do with the train
 
   end
 end
+
+local function wait_for_q()
+  repeat
+      local _, key = os.pullEvent("key")
+  until key == keys.q
+  print("Q was pressed!")
+end
+
+parallel.waitForAny(loop, wait_for_q)

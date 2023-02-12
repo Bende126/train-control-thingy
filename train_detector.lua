@@ -1,59 +1,73 @@
+local settings = require("options")
 local peripheral_list = require("peripherals")
+
+local modem = peripheral.find("modem")
+if not modem then error("No modem attached", 0) end
+
+local main_ch = tonumber(settings.main_channel())
+local reply_ch = tonumber(string.sub(os.getComputerLabel(), -1)) + 5 --different reply channel from same track computers
+local track = string.sub(os.getComputerLabel(), 7)
+
+
+modem.open(reply_ch)
+
+local message_table = {name = os.getComputerLabel(), message = "startup"}
+modem.transmit(main_ch, reply_ch, message_table)
+
+
+local peripheralss = peripheral_list.get_peripherals()
+
+-- peripheral list
+local track_detector = peripheral_list.find_peripheral("train_detect", track, peripheralss)
+local track_storage = peripheral_list.find_peripheral("color_storage", track, peripheralss)
+local track_scan_hopper = peripheral_list.find_peripheral("train_in_color", track, peripheralss)
+local track_return_loop = peripheral_list.find_peripheral("train_in_organizer", track, peripheralss)
+local track_stop = peripheral_list.find_peripheral("train_stop", track, peripheralss)
 
 local function wait_for_train()
     while true do
         local colorcode = {}
-        -- colorcode detector peripherals
-        local track2_detector = peripheral_list.find_peripheral("train_detect", "track_2")
-        local track2_storage = peripheral_list.find_peripheral("color_storage", "track_2")
-        local track2_scan_hopper = peripheral_list.find_peripheral("train_in_color", "track_2")
-        local track2_return_loop = peripheral_list.find_peripheral("train_in_organizer", "track_2")
-        local track2_stop = peripheral_list.find_peripheral("train_stop", "track_2")
 
         print("waiting for train")
 
-        while track2_detector.func.getInput(track2_detector.side) ~= true do
+        while track_detector.func.getInput(track_detector.side) ~= true do
         end
 
         print("the train is here")
 
-        track2_stop.func.setOutput(track2_stop.side, true)
+        track_stop.func.setOutput(track_stop.side, true)
 
         sleep(5)
 
         -- load from last cart to storage barrel
-        track2_scan_hopper.func.setOutput(track2_scan_hopper.side, false)
+        track_scan_hopper.func.setOutput(track_scan_hopper.side, false)
 
         sleep(2)
 
-        for slot, item in ipairs(track2_storage.func.list()) do
+        for slot, item in ipairs(track_storage.func.list()) do
             colorcode[slot] = item
         end
 
         -- close storage barrel loading hopper
-        track2_scan_hopper.func.setOutput(track2_scan_hopper.side, true)
+        track_scan_hopper.func.setOutput(track_scan_hopper.side, true)
         sleep(0.1)
         -- return colors to the cart
-        track2_return_loop.func.setOutput(track2_return_loop.side, false)
+        track_return_loop.func.setOutput(track_return_loop.side, false)
         sleep(5)
 
         -- close return loop
-        track2_return_loop.func.setOutput(track2_return_loop.side, true)
+        track_return_loop.func.setOutput(track_return_loop.side, true)
         sleep(0.1)
 
         -- reopen storage barrel loading hopper
-        track2_scan_hopper.func.setOutput(track2_scan_hopper.side, false)
+        track_scan_hopper.func.setOutput(track_scan_hopper.side, false)
         sleep(2)
         -- close storage barrel loading hopper
-        track2_scan_hopper.func.setOutput(track2_scan_hopper.side, true)
+        track_scan_hopper.func.setOutput(track_scan_hopper.side, true)
         sleep(0.1)
         -- return colors to the cart
-        track2_return_loop.func.setOutput(track2_return_loop.side, false)
+        track_return_loop.func.setOutput(track_return_loop.side, false)
         sleep(5)
-
-        for i, item in ipairs(colorcode) do
-            print(item.name)
-        end
 
     end
 end
