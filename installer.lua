@@ -9,6 +9,6 @@ local files = {
 local header = "https://github.com/Bende126/train-control-thingy/blob/master/"
 
 for _,i in ipairs(files) do
-    shell.run("wget " .. header .. i .. " " .. i)
+    shell.run("wget", header..i, i)
 end
 
