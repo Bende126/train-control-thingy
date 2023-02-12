@@ -44,20 +44,58 @@ for i, comp in pairs(computers) do
   print("done")
 end
 
+local tracks_sorted = {}
+
 for key, value in settings.pairsByKeys(tracks) do
-  print(key  .. " " .. value.track)
+  tracks_sorted[key] = value
 end
 
-local function train_at_entrance(t)
-  for key, value in pairs(tracks) do
-    
+local function first_unoccupied(track_num)
+  if track_num <= 2 then
+    for i=1, 3, 1 do
+      if tracks_sorted[i].occupied == 0 then
+        return tracks_sorted[i].track
+      end
+    end 
+  end
+  if track_num > 2 then
+    for i=6, 4, -1 do
+      if tracks_sorted[i].occupied == 0 then
+        return tracks_sorted[i].track
+      end
+    end 
   end
 end
 
+local function get_route(from, to)
+  --check same track
+  if tonumber(from) == tonumber(to) then
+    return
+  end
+
+  --check direct route
+  local switch = peripheral_list.find_peripheral("train_switch:" .. from .. "-" .. to, nil, peripheralss)
+  if switch then
+    return switch
+  end
+
+  --check route
+  local tmp = {}
+  tmp[#tmp+1] = peripheral_list.partial_find("train_switch:" .. from, peripheralss)
+  tmp[#tmp+1] = peripheral_list.partial_find("train_switch:" .. string.sub(tmp[1].name, -1), peripheralss)
+  return tmp
+end
+
+local function train_at_entrance(tracknum)
+  local target = first_unoccupied(tracknum)
+  print(tracknum .. " " .. target)
+  get_route(tracknum, target)
+end
+
 -- its a big ass switch
-local function what_to_do(t)
-  if t.message == "train at etrance" then
-    train_at_entrance(t)
+local function what_to_do(message)
+  if message.message == "train at etrance" then
+    train_at_entrance(message.track)
   end
 end
 
@@ -71,7 +109,7 @@ local function loop_left()
     until channel == main_ch
 
     -- what to do with the train
-    if tonumber(string.sub(message.track, -1)) <= 2 then
+    if message.track <= 2 then
       what_to_do(message)
     end
 
@@ -88,13 +126,12 @@ local function loop_right()
     until channel == main_ch
 
     -- what to do with the train
-    if tonumber(string.sub(message.track, -1)) > 2 then
+    if message.track > 2 then
       what_to_do(message)
     end
 
   end
 end
-
 
 local function wait_for_q()
   repeat
