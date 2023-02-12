@@ -18,6 +18,7 @@ for _,i in ipairs(files) do
     end
 end
 
+print(shell.dir())
 shell.setDir("/")
 
 local settings = require("options")
