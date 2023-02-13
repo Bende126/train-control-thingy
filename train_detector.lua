@@ -80,7 +80,7 @@ local function wait_for_train()
 
         -- send info to the server
         local message_table = {name = os.getComputerLabel(), message = "train at etrance", track = tonumber(string.sub(os.getComputerLabel(), -1)), color = colorcode}
-        modem.send(main_ch, reply_ch, message_table)
+        modem.transmit(main_ch, reply_ch, message_table)
 
         item_spin()
 
