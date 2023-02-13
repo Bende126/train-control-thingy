@@ -67,29 +67,39 @@ local function first_unoccupied(track_num)
   end
 end
 
-local function get_route(from, to)
+local function set_route(from, to, input)
   --check same track
   if tonumber(from) == tonumber(to) then
+    print("same")
     return
   end
 
-  --check direct route
+  --check route with 1 switch
   local switch = peripheral_list.find_peripheral("train_switch:" .. from .. "-" .. to, nil, peripheralss)
   if switch then
-    return switch
+    switch.func.setOutput(switch.side, input)
+    print("1 hagyma")
+    return
   end
 
-  --check route
-  local tmp = {}
-  tmp[#tmp+1] = peripheral_list.partial_find("train_switch:" .. from, peripheralss)
-  tmp[#tmp+1] = peripheral_list.partial_find("train_switch:" .. string.sub(tmp[1].name, -1), peripheralss)
-  return tmp
+  --check route with 2 switches
+  local first = peripheral_list.partial_find("train_switch:" .. from, peripheralss)
+  local second = peripheral_list.partial_find("train_switch:" .. string.sub(first.name, -1), peripheralss)
+
+  if first and second then
+    first.func.setOutput(first.side, input)
+    second.func.setOutput(second.side, input)
+    print("2 hagyma")
+    return
+  end
+
 end
 
 local function train_at_entrance(tracknum)
   local target = first_unoccupied(tracknum)
   print(tracknum .. " " .. target)
-  get_route(tracknum, target)
+  set_route(tracknum, target, true)
+  tracks_sorted[target+1].occupied = 1
 end
 
 -- its a big ass switch
