@@ -6,7 +6,7 @@ local function read_settings()
     local ch = f:read()
     f:close()
     if not ch then
-        ch = ""
+        ch = "{}"
     end
     return ch
 end
