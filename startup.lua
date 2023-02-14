@@ -7,7 +7,7 @@ if not modem then error("No modem attached", 0) end
 local me_system = peripheral.find("meBridge")
 if not me_system then error("No ME attached", 0) end
 
-local main_ch = tonumber(settings.main_channel())
+local main_ch = tonumber(settings.get_data("main channel"))
 local reply_ch = tonumber(string.sub(os.getComputerLabel(), -1)) + 10
 
 local track = os.getComputerLabel()

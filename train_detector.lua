@@ -4,7 +4,7 @@ local peripheral_list = require("peripherals")
 local modem = peripheral.find("modem")
 if not modem then error("No modem attached", 0) end
 
-local main_ch = tonumber(settings.main_channel())
+local main_ch = tonumber(settings.get_data("main channel"))
 local reply_ch = tonumber(string.sub(os.getComputerLabel(), -1)) + 5 --different reply channel from same track computers
 local track = string.sub(os.getComputerLabel(), 7)
 
