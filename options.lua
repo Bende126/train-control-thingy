@@ -16,12 +16,12 @@ local function write_settings(data)
 end
 
 local function get_data(key)
-    local decoded = json.decode(read_settings)
+    local decoded = json.decode(read_settings())
     return decoded[key]
 end
 
 local function save_data(key, data)
-    local decoded = json.decode(read_settings)
+    local decoded = json.decode(read_settings())
     decoded[key] = data
     write_settings(json.encode(decoded))
 end
