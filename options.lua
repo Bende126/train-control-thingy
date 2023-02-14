@@ -5,6 +5,9 @@ local function read_settings()
     if f == nil then return 0 end
     local ch = f:read()
     f:close()
+    if not ch then
+        ch = {}
+    end
     return ch
 end
 
