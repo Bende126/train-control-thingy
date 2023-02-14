@@ -7,6 +7,7 @@ local files = {
     "startup.lua",
     "peripherals.lua",
     "options_test.lua",
+    "json.lua",
     "settings/main_channel.txt",
     "settings/settings.json",
     "storage_settings/files.txt",
