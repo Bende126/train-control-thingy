@@ -8,7 +8,6 @@ local files = {
     "peripherals.lua",
     "options_test.lua",
     "json.lua",
-    "settings/main_channel.txt",
     "settings/settings.json",
     "storage_settings/files.txt",
     "storage_settings/hopper_controls.txt",
