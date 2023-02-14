@@ -6,8 +6,9 @@ local files = {
     "options.lua",
     "startup.lua",
     "peripherals.lua",
-    "options_test.lua",
+    -- "options_test.lua",
     "json.lua",
+    "queue_manager.lua",
     "settings/settings.json",
     "storage_settings/files.txt",
     "storage_settings/hopper_controls.txt",
@@ -36,7 +37,21 @@ if starts_with(os.getComputerLabel(), "color_") then
     end
 
     if not shell.run("rename", "train_detector.lua", "startup.lua") then
+        error("Rename error", 0)
+    end
+elseif starts_with(os.getComputerLabel(), "server") then
+    if not shell.run("rm", files[2]) then
+        error("Rm error", 0)
+    end
+
+    local path = header .. "server.lua"
+
+    if not shell.run("wget", path, "server.lua") then
         error("Download error", 0)
+    end
+
+    if not shell.run("rename", "server.lua", "startup.lua") then
+        error("Rename error", 0)
     end
 end
 
