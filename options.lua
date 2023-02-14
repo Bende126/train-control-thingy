@@ -29,6 +29,12 @@ local function save_data(key, data)
     write_settings(json.encode(decoded))
 end
 
+local function remove_data(key)
+    local decoded = json.decode(read_settings())
+    decoded[key] = nil
+    write_settings(json.encode(decoded))
+end
+
 local function pairsByKeys (t, f)
     local a = {}
     for n in pairs(t) do table.insert(a, n) end
@@ -47,4 +53,4 @@ local function starts_with(text, prefix)
     return text:find(prefix, 1, true) == 1
 end
 
-return {get_data = get_data, pairsByKeys = pairsByKeys, starts_with = starts_with, save_data = save_data}
+return {get_data = get_data, pairsByKeys = pairsByKeys, starts_with = starts_with, save_data = save_data, remove_data = remove_data}
