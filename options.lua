@@ -1,9 +1,29 @@
-local function main_channel()
-    local f = io.open("settings/main_channel.txt", "r")
+local json = require("json")
+
+local function read_settings()
+    local f = io.open("settings/settings.json", "r")
     if f == nil then return 0 end
     local ch = f:read()
     f:close()
     return ch
+end
+
+local function write_settings(data)
+    local f = io.open("settings/settings.json", "w")
+    if f == nil then return 0 end
+    f:write(data)
+    f:close()
+end
+
+local function get_data(key)
+    local decoded = json.decode(read_settings)
+    return decoded[key]
+end
+
+local function save_data(key, data)
+    local decoded = json.decode(read_settings)
+    decoded[key] = data
+    write_settings(json.encode(decoded))
 end
 
 local function pairsByKeys (t, f)
@@ -24,4 +44,4 @@ local function starts_with(text, prefix)
     return text:find(prefix, 1, true) == 1
 end
 
-return {main_channel = main_channel, pairsByKeys = pairsByKeys, starts_with = starts_with}
+return {get_data = get_data, pairsByKeys = pairsByKeys, starts_with = starts_with, save_data = save_data}
