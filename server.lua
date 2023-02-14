@@ -1,10 +1,11 @@
 local settings = require("options")
 local peripheral_list = require("peripherals")
+local qmanager = require("queue_manager")
 
 local modem = peripheral.find("modem")
 if not modem then error("No modem attached", 0) end
 
-local main_ch = tonumber(settings.main_channel())
+local main_ch = tonumber(settings.get_data("main channel"))
 
 modem.open(main_ch) -- receives messages from other computers on this channel
 
@@ -44,24 +45,18 @@ for i, comp in pairs(computers) do
   print("done")
 end
 
-local tracks_sorted = {}
-
-for key, value in settings.pairsByKeys(tracks) do
-  tracks_sorted[key] = value
-end
-
 local function first_unoccupied(track_num)
   if track_num <= 2 then
     for i=1, 3, 1 do
-      if tracks_sorted[i].occupied == 0 then
-        return tracks_sorted[i].track
+      if tracks["track_"..i-1].occupied == 0 then
+        return tracks["track_" .. i-1].track
       end
     end 
   end
   if track_num > 2 then
     for i=6, 4, -1 do
-      if tracks_sorted[i].occupied == 0 then
-        return tracks_sorted[i].track
+      if tracks["track_"..i-1].occupied == 0 then
+        return tracks["track_"..i-1].track
       end
     end 
   end
@@ -70,7 +65,6 @@ end
 local function set_route(from, to, input)
   --check same track
   if tonumber(from) == tonumber(to) then
-    print("same")
     return
   end
 
@@ -78,7 +72,6 @@ local function set_route(from, to, input)
   local switch = peripheral_list.find_peripheral("train_switch:" .. from .. "-" .. to, nil, peripheralss)
   if switch then
     switch.func.setOutput(switch.side, input)
-    print("1 hagyma")
     return
   end
 
@@ -89,7 +82,6 @@ local function set_route(from, to, input)
   if first and second then
     first.func.setOutput(first.side, input)
     second.func.setOutput(second.side, input)
-    print("2 hagyma")
     return
   end
 
@@ -97,9 +89,8 @@ end
 
 local function train_at_entrance(tracknum)
   local target = first_unoccupied(tracknum)
-  print(tracknum .. " " .. target)
   set_route(tracknum, target, true)
-  tracks_sorted[target+1].occupied = 1
+  tracks["track_" .. target].occupied = 1
 end
 
 -- its a big ass switch
@@ -109,19 +100,22 @@ local function what_to_do(message)
   end
 end
 
--- left side tracks: 0, 1, 2
-local function loop_left()
-  while true do
-
-    local event, side, channel, replyChannel, message, distance
+local function recv_message()
+  local event, side, channel, replyChannel, message, distance
     repeat
       event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
     until channel == main_ch
 
-    -- what to do with the train
     if message.track <= 2 then
-      what_to_do(message)
+      qmanager.add_queue(message, "left side")
+    elseif message.track > 2 then
+      qmanager.add_queue(message, "right side")
     end
+end
+
+-- left side tracks: 0, 1, 2
+local function loop_left()
+  while true do
 
   end
 end
@@ -129,16 +123,6 @@ end
 -- right side tracks: 3, 4, 5
 local function loop_right()
   while true do
-
-    local event, side, channel, replyChannel, message, distance
-    repeat
-      event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
-    until channel == main_ch
-
-    -- what to do with the train
-    if message.track > 2 then
-      what_to_do(message)
-    end
 
   end
 end
@@ -150,4 +134,4 @@ local function wait_for_q()
   print("Q was pressed!")
 end
 
-parallel.waitForAny(loop_left, loop_right, wait_for_q)
+parallel.waitForAny(loop_left, loop_right, wait_for_q, recv_message)

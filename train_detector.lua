@@ -22,7 +22,6 @@ local scan_hopper = peripheral_list.find_peripheral("train_in_color", track, per
 local return_loop = peripheral_list.find_peripheral("train_in_organizer", track, peripheralss)
 local stop = peripheral_list.find_peripheral("train_stop", track, peripheralss)
 
-
 -- its necessary if color sequence matters
 local function item_spin()
     -- close storage barrel loading hopper
