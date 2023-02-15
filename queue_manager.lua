@@ -40,6 +40,12 @@ local function save_to_file(path, data)
     options.save_data(path, waiting_list)
 end
 
+local function del_file(data)
+    if fs.exists(data.path) then
+        fs.delete(data.path)
+    end
+end
+
 local function add_queue(data, path)
     if not path then
         path = "queue"
@@ -50,7 +56,32 @@ local function add_queue(data, path)
 end
 
 local function get_first(path)
-    
+    local waiting_list = options.get_data(path)
+    return waiting_list["queue"][1]
 end
 
-return {add_queue = add_queue, get_first = get_first}
+local function remove_queue(path, data)
+    local waiting_list = options.get_data(path)
+    for i, v in ipairs(waiting_list["queue"]) do
+        if v.path == data.path and v.priority == data.priority then
+            del_file(data)
+            waiting_list["queue"][i] = nil
+        end
+    end
+    options.save_data(path, waiting_list)
+end
+
+local function get_priority(path)
+    local waiting_list = options.get_data(path)
+    local max_prio = 0
+    local index = 0
+    for i,v in ipairs(waiting_list["queue"]) do 
+        if v.priority >= max_prio then
+            max_prio = v.priority
+            index = i
+        end
+    end
+    return waiting_list["queue"][index]
+end
+
+return {add_queue = add_queue, get_first = get_first, get_priority = get_priority, remove_queue = remove_queue}
