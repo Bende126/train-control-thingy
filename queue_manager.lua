@@ -70,7 +70,7 @@ local function remove_queue(path, data)
     for i, v in ipairs(waiting_list["queue"]) do
         if v.path == data.path and v.priority == data.priority then
             del_file(data)
-            waiting_list["queue"][i] = nil
+            table.remove(waiting_list["queue"], i)
         end
     end
     options.save_data(path, waiting_list)
@@ -81,7 +81,7 @@ local function get_priority(path)
     local max_prio = 0
     local index = 0
     for i,v in ipairs(waiting_list["queue"]) do 
-        if v.priority >= max_prio then
+        if v.priority > max_prio then
             max_prio = v.priority
             index = i
         end
