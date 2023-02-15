@@ -6,7 +6,7 @@ local files = {
     "options.lua",
     "startup.lua",
     "peripherals.lua",
-    -- "options_test.lua",
+    "options_test.lua",
     "json.lua",
     "queue_manager.lua",
     "settings/settings.json",
