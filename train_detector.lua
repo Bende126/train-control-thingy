@@ -22,47 +22,17 @@ local scan_hopper = peripheral_list.find_peripheral("train_in_color", track, per
 local return_loop = peripheral_list.find_peripheral("train_in_organizer", track, peripheralss)
 local stop = peripheral_list.find_peripheral("train_stop", track, peripheralss)
 
--- its necessary if color sequence matters
-local function item_spin()
-    -- close storage barrel loading hopper
-    scan_hopper.func.setOutput(scan_hopper.side, true)
-    sleep(0.1)
-    -- return colors to the cart
-    return_loop.func.setOutput(return_loop.side, false)
-    sleep(5)
-    
-    -- close return loop
-    return_loop.func.setOutput(return_loop.side, true)
-    sleep(0.1)
-    
-    -- reopen storage barrel loading hopper
-    scan_hopper.func.setOutput(scan_hopper.side, false)
-    sleep(2)
-    -- close storage barrel loading hopper
-    scan_hopper.func.setOutput(scan_hopper.side, true)
-    sleep(0.1)
-    -- return colors to the cart
-    return_loop.func.setOutput(return_loop.side, false)
-    sleep(5)
-end
-
-local function recv_message()
-    local event, side, channel, replyChannel, message, distance
-    repeat
-      event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
-    until channel == reply_ch
-end
 
 local function wait_for_train()
     while true do
         local colorcode = {}
 
-        print("waiting for train")
+        print("Waiting for train")
 
         while detector.func.getInput(detector.side) ~= true do
         end
 
-        print("the train is here")
+        print("The train is here")
 
         stop.func.setOutput(stop.side, true)
 
@@ -77,12 +47,23 @@ local function wait_for_train()
             colorcode[slot] = item
         end
 
+        scan_hopper.func.setOutput(scan_hopper.side, true)
+
         -- send info to the server
         local message_table = {name = os.getComputerLabel(), message = "train at etrance", track = tonumber(string.sub(os.getComputerLabel(), -1)), color = colorcode}
         modem.transmit(main_ch, reply_ch, message_table)
 
-        item_spin()
-
+        --wait for server instruction
+        local event, side, channel, replyChannel, message, distance
+        repeat
+          event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
+        until channel == reply_ch
+        if message.message == "ok, go" then
+            return_loop.func.setOutput(return_loop.side, false)
+            sleep(2)
+            stop.func.setOutput(stop.side, false)
+        end
+        return_loop.func.setOutput(return_loop.side, true)
     end
 end
 
