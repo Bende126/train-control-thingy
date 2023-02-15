@@ -18,14 +18,14 @@ local function ensure_settings(path)
     end
 end
 
-local function save_to_file(path, data)
+local function save_to_file(path, data, priority)
     local waiting_list = options.get_data(path)
     local filename = waiting_list["sequence index"] .. ".json"
     local path_to_file = fs.combine(path, filename)
 
     local tmp = {}
     tmp["path"] = path_to_file
-    tmp["priority"] = 1
+    tmp["priority"] = priority
 
     waiting_list["queue"][waiting_list["sequence index"]] = tmp
     waiting_list["sequence index"] = waiting_list["sequence index"] + 1
@@ -46,13 +46,18 @@ local function del_file(data)
     end
 end
 
-local function add_queue(data, path)
+local function add_queue(data, path, priority)
     if not path then
         path = "queue"
     end
+
+    if not priority then
+        priority = 1
+    end
+    
     ensure_path(path)
     ensure_settings(path)
-    save_to_file(path, data)
+    save_to_file(path, data, priority)
 end
 
 local function get_first(path)
