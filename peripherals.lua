@@ -1,4 +1,4 @@
-local settings = require("options")
+local settings = require("settings")
 
 local function find_peripheral(name, track, interfaces)
   if track == nil then

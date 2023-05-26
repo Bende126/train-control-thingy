@@ -3,12 +3,9 @@ local function starts_with(text, prefix)
 end
 
 local files = {
-    "options.lua",
-    "startup.lua",
     "peripherals.lua",
-    "options_test.lua",
     "json.lua",
-    "queue_manager.lua",
+    "settings.lua",
     "settings/settings.json",
     "storage_settings/files.txt",
     "storage_settings/hopper_controls.txt",
@@ -16,7 +13,7 @@ local files = {
     "storage_settings/train_detector.txt"
 }
 
-local header = "https://raw.githubusercontent.com/Bende126/train-control-thingy/master/"
+local header = "https://raw.githubusercontent.com/Bende126/train-control-thingy/version2/"
 
 for _,i in ipairs(files) do
     local path = header .. i
@@ -25,7 +22,7 @@ for _,i in ipairs(files) do
     end
 end
 
-if starts_with(os.getComputerLabel(), "color_") then
+--[[ if starts_with(os.getComputerLabel(), "color_") then
     if not shell.run("rm", files[2]) then
         error("Rm error", 0)
     end
@@ -54,4 +51,4 @@ elseif starts_with(os.getComputerLabel(), "server") then
         error("Rename error", 0)
     end
 end
-
+ ]]
