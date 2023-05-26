@@ -24,6 +24,10 @@ for _,i in ipairs(files) do
     end
 end
 
+if not shell.run("wget", "https://cloud-catcher.squiddev.cc/cloud.lua") then
+    error("Donwload error at: cloud.lua", 0)
+end
+
 --[[ if starts_with(os.getComputerLabel(), "color_") then
     if not shell.run("rm", files[2]) then
         error("Rm error", 0)
