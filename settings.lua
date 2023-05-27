@@ -122,7 +122,7 @@ local function remove_data(t)
     write_settings{cfile = cfile, data = json.encode(decoded)}
 end
 
-local function starts_with(text, prefix)
+local function starts_with(text, prefix) -- TODO
     return text:find(prefix, 1, true) == 1
 end
 

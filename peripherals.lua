@@ -24,18 +24,11 @@ local function partial_find(name, interfaces)
   end
 end
   
-  local function get_peripherals()
+  local function get_interfaces()
   
     local interfaces = {}
 
-    InterFace = {name = 0, id = 0, track = 0, side = 0, io = 0, func = 0}
-
-    function InterFace:new(o)
-      o = o or {}
-      setmetatable(o, self)
-      self.__index = self
-      return o
-    end
+    local interFace = {name = 0, id = 0, track = 0, side = 0, io = 0, func = 0}
   
   -- creates an array based on preset keywords
     local function mysplit (inputstr)
@@ -48,7 +41,8 @@ end
           tmp[key] = str
           i = i+1
         end
-        return InterFace:new(tmp)
+        setmetatable(tmp, {__index = {interFace}})
+        return tmp
     end
   
   -- checks the file
@@ -107,4 +101,4 @@ end
   
   end
   
-  return {get_peripherals = get_peripherals, find_peripheral = find_peripheral, partial_find = partial_find}
+  return {get_interfaces = get_interfaces, find_peripheral = find_peripheral, partial_find = partial_find}
