@@ -13,7 +13,7 @@ local header = "https://raw.githubusercontent.com/Bende126/train-control-thingy/
 for _,i in ipairs(files) do
     local path = header .. i
 
-    if not shell.run("rm", path) then
+    if not shell.run("rm", i) then
         error("Rm error at: ".. i, 0)
     end
     
