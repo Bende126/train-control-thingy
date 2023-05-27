@@ -6,8 +6,6 @@ local files = {
     "peripherals.lua",
     "json.lua",
     "settings.lua",
-    "shell_test.lua",
-    "event_test.lua",
     "settings/settings.json",
     "storage_settings/files.txt",
     "storage_settings/hopper_controls.txt",
@@ -19,6 +17,11 @@ local header = "https://raw.githubusercontent.com/Bende126/train-control-thingy/
 
 for _,i in ipairs(files) do
     local path = header .. i
+
+    if not shell.run("rm", path) then
+        error("Rm error at: ".. i, 0)
+    end
+    
     if not shell.run("wget", path, i) then
         error("Donwload error at: ".. i, 0)
     end
