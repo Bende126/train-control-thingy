@@ -1,12 +1,7 @@
-local function starts_with(text, prefix)
-    return text:find(prefix, 1, true) == 1
-end
-
 local files = {
     "peripherals.lua",
     "json.lua",
     "settings.lua",
-    "settings/settings.json",
     "storage_settings/files.txt",
     "storage_settings/hopper_controls.txt",
     "storage_settings/hopper_storage_controls.txt",
