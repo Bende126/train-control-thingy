@@ -30,34 +30,3 @@ end
 if not shell.run("wget", "https://cloud-catcher.squiddev.cc/cloud.lua") then
     error("Donwload error at: cloud.lua", 0)
 end
-
---[[ if starts_with(os.getComputerLabel(), "color_") then
-    if not shell.run("rm", files[2]) then
-        error("Rm error", 0)
-    end
-
-    local path = header .. "train_detector.lua"
-
-    if not shell.run("wget", path, "train_detector.lua") then
-        error("Download error", 0)
-    end
-
-    if not shell.run("rename", "train_detector.lua", "startup.lua") then
-        error("Rename error", 0)
-    end
-elseif starts_with(os.getComputerLabel(), "server") then
-    if not shell.run("rm", files[2]) then
-        error("Rm error", 0)
-    end
-
-    local path = header .. "server.lua"
-
-    if not shell.run("wget", path, "server.lua") then
-        error("Download error", 0)
-    end
-
-    if not shell.run("rename", "server.lua", "startup.lua") then
-        error("Rename error", 0)
-    end
-end
- ]]
