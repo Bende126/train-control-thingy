@@ -4,5 +4,8 @@ multishell.setTitle(shellid, "HAAAAAAAAAAAA")
 while true do
     local myevent, msg = os.pullEvent("testing")
     print("Úristen, event történt: " .. myevent)
-    print(msg)
+    if (msg == "baba") then
+        multishell.setFocus(shellid)
+        shell.exit()
+    end
 end
