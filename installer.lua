@@ -16,6 +16,8 @@ for _,i in ipairs(files) do
     if not shell.run("rm", i) then
         error("Rm error at: ".. i, 0)
     end
+
+    sleep(1)
     
     if not shell.run("wget", path, i) then
         error("Donwload error at: ".. i, 0)
