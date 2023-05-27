@@ -25,3 +25,10 @@ end
 if not shell.run("wget", "https://cloud-catcher.squiddev.cc/cloud.lua") then
     error("Donwload error at: cloud.lua", 0)
 end
+
+print("Finished downloading the files")
+sleep(2)
+if not shell.run("clear") then
+    error("Shell error at clear", 0)
+end
+
