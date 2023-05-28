@@ -2,6 +2,7 @@ local files = {
     "peripherals.lua",
     "json.lua",
     "settings.lua",
+    "main.lua",
     "storage_settings/files.txt",
     "storage_settings/hopper_controls.txt",
     "storage_settings/hopper_storage_controls.txt",
