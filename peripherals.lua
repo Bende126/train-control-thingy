@@ -56,7 +56,6 @@ local function lines_from(file, class)
   return lines
 end
 
-
 local function create_merged(files)
 
   local interfaces = {}
@@ -72,14 +71,6 @@ local function create_merged(files)
     end
   end
   return interfaces
-end
-
-local function partial_find(name, interfaces)
-  for i, line in ipairs(interfaces) do
-    if settings.starts_with(line.name, name) then
-      return line
-    end
-  end
 end
 
 -- creates a merged list of peripherals
@@ -102,5 +93,18 @@ local function get_interfaces()
   return interfaces
 
 end
+
+local function partial_find(name)
+  local tmp = {}
+  local i = 1
+  for _, line in pairs(get_interfaces()) do
+    if settings.starts_with(line.name, name) then
+      tmp[tostring(i)] = line
+      i = i+1
+    end
+  end
+  return tmp
+end
+
   
   return {get_interfaces = get_interfaces, find_peripheral = find_peripheral, partial_find = partial_find}
