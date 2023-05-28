@@ -29,7 +29,8 @@ if not shell.run("wget", "https://cloud-catcher.squiddev.cc/cloud.lua") then
 end
 
 print("Finished downloading the files")
-sleep(2)
+
+sleep(5)
 if not shell.run("clear") then
     error("Shell error at clear", 0)
 end

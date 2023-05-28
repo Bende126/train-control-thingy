@@ -1,24 +1,22 @@
 local json = require("json")
 
-FILES = {
-    "settings.json",
-    "peripherals.json"
-}
+FOLDER = "./settings"
 
-FOLDER = "/settings"
-
-local function ensure_files(path)
+local function ensure_files(t)
     --[[
-    Ensure config files for my unconsistent use of io
+    Ensure config files for my unconsistent use of io and fs global functions
     ]]
-    
-    for _,i in FILES do
-        local file_path = fs.combine(path, i)
-        if fs.exists(file_path) == false then
-            local f = fs.open(file_path, "w")
-            f:write("{}")
-            f:close()
-        end
+
+    setmetatable(t, {__index = {
+        cfile = "settings.json"
+    }})
+    local cfile = t.cfile
+
+    local file_path = fs.combine(FOLDER, cfile)
+    if fs.exists(file_path) == false then
+        local f = fs.open(file_path, "w")
+        f:write("{}")
+        f:close()
     end
 end
 
@@ -28,11 +26,12 @@ local function read_settings(t)
     cfile: from which settings file you want to read. Default is settings.json
     ]]
 
-    -- named default arguments
-    setmetatable(t, {__index = {cfile = "settings.json"}})
+    setmetatable(t, {__index = {
+        cfile = "settings.json"
+    }})
     local cfile = t.cfile
 
-    ensure_files(FOLDER)
+    ensure_files{cfile = cfile}
 
     local f = io.open(fs.combine(FOLDER, cfile), "r")
     local ch = f:read()
@@ -54,7 +53,7 @@ local function write_settings(t)
     local cfile = t.cfile
     local data = t.data
 
-    ensure_files(FOLDER)
+    ensure_files{cfile = cfile}
 
     local f = io.open(fs.combine(FOLDER, cfile), "w")
     f:write(data)
@@ -105,7 +104,7 @@ end
 
 local function remove_data(t)
     --[[
-    Save data to the setting files
+    Remove data from the setting files
     cfile: the file you want to read from. The default is settings.json
     key: the key that contains your data. The default is TODO
     ]]
